@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33110.190
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EasyMapper", "EasyMapper.csproj", "{6200948A-474C-42A0-BF84-B455C56FF646}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyMapper.Test", "..\EasyMapper.Test\EasyMapper.Test.csproj", "{3E297FD0-EA03-4590-8A40-37909C48258A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6200948A-474C-42A0-BF84-B455C56FF646}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6200948A-474C-42A0-BF84-B455C56FF646}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6200948A-474C-42A0-BF84-B455C56FF646}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6200948A-474C-42A0-BF84-B455C56FF646}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E297FD0-EA03-4590-8A40-37909C48258A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E297FD0-EA03-4590-8A40-37909C48258A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E297FD0-EA03-4590-8A40-37909C48258A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E297FD0-EA03-4590-8A40-37909C48258A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0F8B913E-295E-4625-9B3D-0C0743112C49}
+	EndGlobalSection
+EndGlobal
