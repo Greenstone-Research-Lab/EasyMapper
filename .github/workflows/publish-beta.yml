@@ -7,6 +7,7 @@ on:
 
 permissions:
   contents: read
+  id-token: write
 
 concurrency:
   group: nuget-staging
@@ -42,17 +43,26 @@ jobs:
             /p:PackageVersion=$version
           if ($LASTEXITCODE -ne 0) { throw "Beta pack failed." }
 
-      - name: Publish beta to NuGet
+      - name: Validate NuGet publishing identity
         shell: pwsh
         env:
-          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+          NUGET_USER: ${{ vars.NUGET_USER }}
         run: |
-          if ([string]::IsNullOrWhiteSpace($env:NUGET_API_KEY)) {
-            throw "The staging environment must define the NUGET_API_KEY secret."
+          if ([string]::IsNullOrWhiteSpace($env:NUGET_USER)) {
+            throw "The staging environment must define the NUGET_USER variable."
           }
 
+      - name: Sign in to NuGet with trusted publishing
+        id: nuget-login
+        uses: NuGet/login@v1
+        with:
+          user: ${{ vars.NUGET_USER }}
+
+      - name: Publish beta to NuGet
+        shell: pwsh
+        run: |
           dotnet nuget push ./artifacts/staging/*.nupkg `
-            --api-key $env:NUGET_API_KEY `
+            --api-key "${{ steps.nuget-login.outputs.NUGET_API_KEY }}" `
             --source https://api.nuget.org/v3/index.json `
             --skip-duplicate
           if ($LASTEXITCODE -ne 0) { throw "Beta publish failed." }

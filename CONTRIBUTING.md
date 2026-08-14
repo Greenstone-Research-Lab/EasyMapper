@@ -43,6 +43,9 @@ README or sample updates when users need guidance.
 ## Releases
 
 Every push promoted into `staging` runs the complete QA pipeline and produces a beta package. The
-GitHub `staging` environment must contain the `NUGET_API_KEY` secret before publishing can succeed.
+Beta publishing uses NuGet Trusted Publishing instead of a long-lived API key. The GitHub `staging`
+environment must define the public NuGet profile name as the `NUGET_USER` variable. The corresponding
+nuget.org trusted publishing policy must target repository owner `Greenstone-Research-Lab`, repository
+`EasyMapper`, workflow `publish-beta.yml`, and environment `staging`.
 Stable releases are promoted from `staging` to `master` after beta validation; stable NuGet
 publication will be attached to a version tag in a dedicated release workflow.
