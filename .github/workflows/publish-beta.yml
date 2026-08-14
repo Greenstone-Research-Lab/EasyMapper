@@ -1,0 +1,58 @@
+name: Publish Beta Package
+
+on:
+  push:
+    branches: [staging]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: nuget-staging
+  cancel-in-progress: false
+
+jobs:
+  publish-beta:
+    name: Validate and publish beta
+    runs-on: windows-latest
+    environment: staging
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+
+      - name: Run QA pipeline
+        shell: pwsh
+        run: ./eng/qa.ps1
+
+      - name: Create beta package
+        shell: pwsh
+        run: |
+          $version = "0.1.0-beta.${{ github.run_number }}"
+          dotnet pack ./src/EasyMapper/EasyMapper.csproj `
+            --configuration Release `
+            --no-build `
+            --output ./artifacts/staging `
+            /p:PackageVersion=$version
+          if ($LASTEXITCODE -ne 0) { throw "Beta pack failed." }
+
+      - name: Publish beta to NuGet
+        shell: pwsh
+        env:
+          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+        run: |
+          if ([string]::IsNullOrWhiteSpace($env:NUGET_API_KEY)) {
+            throw "The staging environment must define the NUGET_API_KEY secret."
+          }
+
+          dotnet nuget push ./artifacts/staging/*.nupkg `
+            --api-key $env:NUGET_API_KEY `
+            --source https://api.nuget.org/v3/index.json `
+            --skip-duplicate
+          if ($LASTEXITCODE -ne 0) { throw "Beta publish failed." }
