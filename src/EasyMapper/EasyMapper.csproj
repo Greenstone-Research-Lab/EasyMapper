@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;net10.0</TargetFrameworks>
+    <IsPackable>true</IsPackable>
+    <PackageId>Greenstone.EasyMapper</PackageId>
+    <Version>0.1.0-alpha.1</Version>
+    <Authors>Ilker Yesilkaya</Authors>
+    <Company>Greenstone Research Lab</Company>
+    <Description>A convention-first, configuration-optional object mapper for .NET with strongly typed lambda overrides and cached execution plans.</Description>
+    <PackageTags>mapper;mapping;object-mapper;fluent;expression-tree</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/Greenstone-Research-Lab/EasyMapper</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <Title>EasyMapper</Title>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,13 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/EasyMapper/EasyMapper.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/EasyMapper.Tests/EasyMapper.Tests.csproj" />
+    <Project Path="tests/EasyMapper.SmokeTests/EasyMapper.SmokeTests.csproj" />
+    <Project Path="tests/EasyMapper.LoadTests/EasyMapper.LoadTests.csproj" />
+  </Folder>
+  <Folder Name="/samples/">
+    <Project Path="samples/EasyMapper.Sample/EasyMapper.Sample.csproj" />
+  </Folder>
+</Solution>
