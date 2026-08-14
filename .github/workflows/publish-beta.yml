@@ -61,7 +61,15 @@ jobs:
       - name: Publish beta to NuGet
         shell: pwsh
         run: |
-          dotnet nuget push ./artifacts/staging/*.nupkg `
+          $packages = @(Get-ChildItem `
+            -LiteralPath ./artifacts/staging `
+            -Filter *.nupkg `
+            -File)
+          if ($packages.Count -ne 1) {
+            throw "Expected exactly one NuGet package, but found $($packages.Count)."
+          }
+
+          dotnet nuget push $packages[0].FullName `
             --api-key "${{ steps.nuget-login.outputs.NUGET_API_KEY }}" `
             --source https://api.nuget.org/v3/index.json `
             --skip-duplicate
