@@ -51,6 +51,22 @@ The scheduled workflow preserves its reports as build artifacts so changes can b
 their runtime, operating system, processor, and BenchmarkDotNet metadata. A report-verification step
 fails the workflow when BenchmarkDotNet creates an empty or statistics-free report.
 
+## Publish a README baseline
+
+README graphics and tables are generated from successful BenchmarkDotNet JSON reports. Produce the
+throughput and cold-start reports on the same machine and then run:
+
+```powershell
+./eng/publish-benchmark-summary.ps1 `
+    -ThroughputReport ./artifacts/benchmarks/readme/throughput/results/*-report-full.json `
+    -ColdStartReport ./artifacts/benchmarks/readme/cold/results/*-report-full.json `
+    -OutputDirectory ./docs/benchmark-results `
+    -SourceCommit (git rev-parse --short HEAD)
+```
+
+Commit all three generated files: the SVG overview, the detailed Markdown report, and the machine-
+readable JSON baseline. Never edit the displayed values independently of their source report.
+
 ## Interpreting results
 
 Compare distributions and allocations, not a single fastest observation. Results from different

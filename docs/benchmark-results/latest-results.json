@@ -1,0 +1,113 @@
+﻿{
+    "generatedAtUtc":  "2026-08-14T20:45:08Z",
+    "sourceCommit":  "ecc28d1",
+    "benchmarkDotNet":  "0.15.8",
+    "runtime":  ".NET 10.0.9 (10.0.9, 10.0.926.27113)",
+    "sdk":  "10.0.301",
+    "operatingSystem":  "Windows 11 (10.0.26200.9168/25H2/2025Update/HudsonValley2)",
+    "processor":  "AMD Ryzen 7 8845HS w/ Radeon 780M Graphics",
+    "throughputJob":  "ShortRun: 1 launch, 3 warmup iterations, 3 measurement iterations",
+    "coldStartJob":  "1 invocation, 5 warmup iterations, 15 measurement iterations",
+    "scenarios":  {
+                      "convention":  [
+                                         {
+                                             "label":  "Manual",
+                                             "method":  "Manual",
+                                             "meanNanoseconds":  7.894,
+                                             "allocatedBytes":  96
+                                         },
+                                         {
+                                             "label":  "EasyMapper",
+                                             "method":  "EasyMapper_CachedPlan",
+                                             "meanNanoseconds":  23.148,
+                                             "allocatedBytes":  96
+                                         },
+                                         {
+                                             "label":  "AutoMapper",
+                                             "method":  "AutoMapper_CachedPlan",
+                                             "meanNanoseconds":  51.842,
+                                             "allocatedBytes":  96
+                                         }
+                                     ],
+                      "existingDestination":  [
+                                                  {
+                                                      "label":  "Manual",
+                                                      "method":  "Manual",
+                                                      "meanNanoseconds":  8.328,
+                                                      "allocatedBytes":  96
+                                                  },
+                                                  {
+                                                      "label":  "EasyMapper",
+                                                      "method":  "EasyMapper_CachedPlan",
+                                                      "meanNanoseconds":  32.674,
+                                                      "allocatedBytes":  96
+                                                  },
+                                                  {
+                                                      "label":  "AutoMapper",
+                                                      "method":  "AutoMapper_CachedPlan",
+                                                      "meanNanoseconds":  58.604,
+                                                      "allocatedBytes":  96
+                                                  }
+                                              ],
+                      "configured":  [
+                                         {
+                                             "label":  "Manual",
+                                             "method":  "Manual",
+                                             "meanNanoseconds":  11.753,
+                                             "allocatedBytes":  80
+                                         },
+                                         {
+                                             "label":  "EasyMapper",
+                                             "method":  "EasyMapper_InlineLambda",
+                                             "meanNanoseconds":  842807.975,
+                                             "allocatedBytes":  13533
+                                         },
+                                         {
+                                             "label":  "AutoMapper",
+                                             "method":  "AutoMapper_Preconfigured",
+                                             "meanNanoseconds":  83.509,
+                                             "allocatedBytes":  112
+                                         }
+                                     ],
+                      "collection1000":  [
+                                             {
+                                                 "label":  "Manual",
+                                                 "method":  "Manual",
+                                                 "meanNanoseconds":  9464.258,
+                                                 "allocatedBytes":  96000
+                                             },
+                                             {
+                                                 "label":  "EasyMapper",
+                                                 "method":  "EasyMapper_CachedPlan",
+                                                 "meanNanoseconds":  32561.806,
+                                                 "allocatedBytes":  160000
+                                             },
+                                             {
+                                                 "label":  "AutoMapper",
+                                                 "method":  "AutoMapper_CachedPlan",
+                                                 "meanNanoseconds":  60664.454,
+                                                 "allocatedBytes":  96000
+                                             }
+                                         ],
+                      "coldStart":  [
+                                        {
+                                            "label":  "Manual",
+                                            "method":  "Manual",
+                                            "meanNanoseconds":  860,
+                                            "allocatedBytes":  96
+                                        },
+                                        {
+                                            "label":  "EasyMapper",
+                                            "method":  "EasyMapper_FirstMap",
+                                            "meanNanoseconds":  556871.429,
+                                            "allocatedBytes":  17520
+                                        },
+                                        {
+                                            "label":  "AutoMapper",
+                                            "method":  "AutoMapper_FirstMap",
+                                            "meanNanoseconds":  2057764.286,
+                                            "allocatedBytes":  240456
+                                        }
+                                    ]
+                  }
+}
