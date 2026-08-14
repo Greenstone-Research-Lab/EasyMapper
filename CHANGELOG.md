@@ -5,6 +5,11 @@ All notable changes to EasyMapper are documented in this file. The project follo
 
 ## [Unreleased]
 
+### Fixed
+
+- NuGet publishing now fails on version conflicts instead of reporting a skipped duplicate as a
+  successful release.
+
 ### Added
 
 - Convention-first mapping without mandatory profiles or startup registration.
