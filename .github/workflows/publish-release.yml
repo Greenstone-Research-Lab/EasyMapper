@@ -1,0 +1,112 @@
+name: Publish Stable Package
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+permissions:
+  contents: write
+  id-token: write
+
+concurrency:
+  group: nuget-production
+  cancel-in-progress: false
+
+jobs:
+  publish-release:
+    name: Validate and publish stable release
+    runs-on: windows-latest
+    environment: production
+
+    steps:
+      - name: Validate release tag
+        shell: pwsh
+        run: |
+          $version = "${{ github.ref_name }}".TrimStart('v')
+          if ($version -notmatch '^\d+\.\d+\.\d+$') {
+            throw "Stable releases require a vMAJOR.MINOR.PATCH tag. Received '${{ github.ref_name }}'."
+          }
+
+          "PACKAGE_VERSION=$version" | Out-File `
+            -FilePath $env:GITHUB_ENV `
+            -Encoding utf8 `
+            -Append
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+
+      - name: Run QA pipeline
+        shell: pwsh
+        run: ./eng/qa.ps1
+
+      - name: Create stable package
+        shell: pwsh
+        run: |
+          dotnet pack ./src/EasyMapper/EasyMapper.csproj `
+            --configuration Release `
+            --no-build `
+            --output ./artifacts/release `
+            /p:PackageVersion=$env:PACKAGE_VERSION
+          if ($LASTEXITCODE -ne 0) { throw "Stable pack failed." }
+
+      - name: Validate NuGet publishing identity
+        shell: pwsh
+        env:
+          NUGET_USER: ${{ vars.NUGET_USER }}
+        run: |
+          if ([string]::IsNullOrWhiteSpace($env:NUGET_USER)) {
+            throw "The production environment must define the NUGET_USER variable."
+          }
+
+      - name: Sign in to NuGet with trusted publishing
+        id: nuget-login
+        uses: NuGet/login@v1
+        with:
+          user: ${{ vars.NUGET_USER }}
+
+      - name: Publish stable package to NuGet
+        shell: pwsh
+        run: |
+          $packages = @(Get-ChildItem `
+            -LiteralPath ./artifacts/release `
+            -Filter *.nupkg `
+            -File)
+          if ($packages.Count -ne 1) {
+            throw "Expected exactly one NuGet package, but found $($packages.Count)."
+          }
+
+          dotnet nuget push $packages[0].FullName `
+            --api-key "${{ steps.nuget-login.outputs.NUGET_API_KEY }}" `
+            --source https://api.nuget.org/v3/index.json `
+            --skip-duplicate
+          if ($LASTEXITCODE -ne 0) { throw "Stable publish failed." }
+
+      - name: Create GitHub release
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $packages = @(Get-ChildItem `
+            -LiteralPath ./artifacts/release `
+            -Filter *.nupkg `
+            -File)
+          $symbolPackages = @(Get-ChildItem `
+            -LiteralPath ./artifacts/release `
+            -Filter *.snupkg `
+            -File)
+          if ($packages.Count -ne 1 -or $symbolPackages.Count -ne 1) {
+            throw "Expected one package and one symbol package for the GitHub release."
+          }
+
+          $assets = @($packages[0].FullName, $symbolPackages[0].FullName)
+          gh release create "${{ github.ref_name }}" @assets `
+            --repo "${{ github.repository }}" `
+            --title "EasyMapper v$env:PACKAGE_VERSION" `
+            --generate-notes
+          if ($LASTEXITCODE -ne 0) { throw "GitHub release creation failed." }

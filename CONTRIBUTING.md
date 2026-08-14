@@ -48,4 +48,7 @@ environment must define the public NuGet profile name as the `NUGET_USER` variab
 nuget.org trusted publishing policy must target repository owner `Greenstone-Research-Lab`, repository
 `EasyMapper`, workflow `publish-beta.yml`, and environment `staging`.
 Stable releases are promoted from `staging` to `master` after beta validation; stable NuGet
-publication will be attached to a version tag in a dedicated release workflow.
+publication is attached to a `vMAJOR.MINOR.PATCH` tag by `publish-release.yml`. The GitHub
+`production` environment must define `NUGET_USER`, allow version tags, and have a matching
+nuget.org Trusted Publishing policy for workflow `publish-release.yml` and environment
+`production`.
