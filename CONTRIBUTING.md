@@ -40,6 +40,20 @@ load test.
 Public members require professional XML documentation. New API behavior requires focused tests and
 README or sample updates when users need guidance.
 
+## Performance changes
+
+Use the BenchmarkDotNet project for performance claims and regression investigations. A focused run
+is suitable during development:
+
+```powershell
+dotnet run --project benchmarks/EasyMapper.Benchmarks/EasyMapper.Benchmarks.csproj `
+    --configuration Release -- --filter "*ConventionMappingBenchmarks*" --job short
+```
+
+Do not compare results produced on different machines or runtime versions. Include the report,
+environment metadata, commit, and filter when a pull request claims a performance change. Shared
+GitHub runners publish informational artifacts and do not impose an absolute performance threshold.
+
 ## Releases
 
 Every push promoted into `staging` runs the complete QA pipeline and produces a beta package. The

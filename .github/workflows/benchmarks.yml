@@ -1,0 +1,49 @@
+name: Performance Benchmarks
+
+on:
+  workflow_dispatch:
+    inputs:
+      filter:
+        description: BenchmarkDotNet filter expression
+        required: false
+        default: "*"
+  schedule:
+    - cron: "0 3 * * 0"
+
+permissions:
+  contents: read
+
+jobs:
+  benchmark:
+    name: Compare mapper performance
+    runs-on: windows-latest
+    timeout-minutes: 45
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+
+      - name: Run benchmarks
+        shell: pwsh
+        env:
+          BENCHMARK_FILTER: ${{ inputs.filter || '*' }}
+        run: |
+          dotnet run --project benchmarks/EasyMapper.Benchmarks/EasyMapper.Benchmarks.csproj --configuration Release -- --filter $env:BENCHMARK_FILTER
+
+      - name: Verify benchmark reports
+        shell: pwsh
+        run: ./eng/verify-benchmark-results.ps1 -ResultsDirectory ./BenchmarkDotNet.Artifacts/results
+
+      - name: Upload benchmark reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: easymapper-benchmarks
+          path: BenchmarkDotNet.Artifacts/**
+          if-no-files-found: warn
+          retention-days: 90

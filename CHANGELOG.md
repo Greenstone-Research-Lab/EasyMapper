@@ -12,6 +12,7 @@ All notable changes to EasyMapper are documented in this file. The project follo
 - Cached expression-tree execution plans.
 - Case matching, null assignment, and scalar conversion policies.
 - Unit, smoke, package-consumer, and sustained-load verification.
+- Reproducible BenchmarkDotNet comparisons with manual mapping and AutoMapper.
 
 ## [0.1.0-alpha.1] - Unreleased
 

@@ -10,4 +10,7 @@
   <Folder Name="/samples/">
     <Project Path="samples/EasyMapper.Sample/EasyMapper.Sample.csproj" />
   </Folder>
+  <Folder Name="/benchmarks/">
+    <Project Path="benchmarks/EasyMapper.Benchmarks/EasyMapper.Benchmarks.csproj" />
+  </Folder>
 </Solution>
