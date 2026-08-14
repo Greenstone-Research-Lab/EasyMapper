@@ -23,7 +23,7 @@ the compiled delegate directly.
 Install the package after the first public release:
 
 ```shell
-dotnet add package EasyMapper
+dotnet add package Greenstone.EasyMapper
 ```
 
 Map compatible properties by convention:
