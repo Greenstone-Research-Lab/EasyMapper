@@ -138,6 +138,12 @@ AutoMapper across warmed convention mapping, first-map startup, inline lambda co
 existing destinations, and repeated element mapping. AutoMapper is a benchmark-only dependency and
 is never included in the `Greenstone.EasyMapper` package.
 
+![EasyMapper performance overview](docs/benchmark-results/benchmark-overview.svg)
+
+The chart is generated from committed BenchmarkDotNet JSON rather than manually entered values.
+See the [latest detailed results](docs/benchmark-results/README.md), including allocations,
+environment metadata, and the current inline-configuration optimization target.
+
 List or run the benchmarks locally:
 
 ```powershell

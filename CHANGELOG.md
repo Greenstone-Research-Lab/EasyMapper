@@ -13,6 +13,7 @@ All notable changes to EasyMapper are documented in this file. The project follo
 - Case matching, null assignment, and scalar conversion policies.
 - Unit, smoke, package-consumer, and sustained-load verification.
 - Reproducible BenchmarkDotNet comparisons with manual mapping and AutoMapper.
+- Generated README performance graphics with a machine-readable benchmark baseline.
 
 ## [0.1.0-alpha.1] - Unreleased
 

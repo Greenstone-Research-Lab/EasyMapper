@@ -53,6 +53,8 @@ dotnet run --project benchmarks/EasyMapper.Benchmarks/EasyMapper.Benchmarks.cspr
 Do not compare results produced on different machines or runtime versions. Include the report,
 environment metadata, commit, and filter when a pull request claims a performance change. Shared
 GitHub runners publish informational artifacts and do not impose an absolute performance threshold.
+README benchmark graphics must be regenerated with `eng/publish-benchmark-summary.ps1`; do not
+hand-edit published measurements.
 
 ## Releases
 
