@@ -35,7 +35,7 @@ jobs:
       - name: Create beta package
         shell: pwsh
         run: |
-          $version = "0.1.0-beta.${{ github.run_number }}"
+          $version = "0.1.1-beta.${{ github.run_number }}"
           dotnet pack ./src/EasyMapper/EasyMapper.csproj `
             --configuration Release `
             --no-build `
@@ -71,6 +71,5 @@ jobs:
 
           dotnet nuget push $packages[0].FullName `
             --api-key "${{ steps.nuget-login.outputs.NUGET_API_KEY }}" `
-            --source https://api.nuget.org/v3/index.json `
-            --skip-duplicate
+            --source https://api.nuget.org/v3/index.json
           if ($LASTEXITCODE -ne 0) { throw "Beta publish failed." }
