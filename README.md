@@ -131,6 +131,33 @@ EasyMapper confines reflection to plan creation. A cached convention plan consis
 Call-specific `Only`, `Except`, and `Bind` rules intentionally produce isolated plans so one call
 cannot modify another call's behavior.
 
+### Reproducible benchmarks
+
+The repository contains a BenchmarkDotNet suite that compares direct assignments, EasyMapper, and
+AutoMapper across warmed convention mapping, first-map startup, inline lambda configuration,
+existing destinations, and repeated element mapping. AutoMapper is a benchmark-only dependency and
+is never included in the `Greenstone.EasyMapper` package.
+
+![EasyMapper performance overview](docs/benchmark-results/benchmark-overview.svg)
+
+The chart is generated from committed BenchmarkDotNet JSON rather than manually entered values.
+See the [latest detailed results](docs/benchmark-results/README.md), including allocations,
+environment metadata, and the current inline-configuration optimization target.
+
+List or run the benchmarks locally:
+
+```powershell
+dotnet run --project benchmarks/EasyMapper.Benchmarks/EasyMapper.Benchmarks.csproj `
+    --configuration Release -- --list flat
+
+dotnet run --project benchmarks/EasyMapper.Benchmarks/EasyMapper.Benchmarks.csproj `
+    --configuration Release -- --filter "*"
+```
+
+See the [benchmark methodology](docs/benchmarks.md) before comparing results. Scheduled GitHub runs
+publish the complete BenchmarkDotNet reports as workflow artifacts; shared-runner timings are not
+used as a pull-request quality gate.
+
 ## Quality gates
 
 The repository treats warnings as errors and enables the current recommended .NET analyzers. The QA
@@ -179,8 +206,8 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for the complete contribution and promoti
 - `EasySimilarity` as an independent similarity-algorithm package
 - A future `EasyMapper.Similarity` integration package
 
-See [architecture](docs/architecture.md), [sample application](samples/EasyMapper.Sample/Program.cs),
-and [changelog](CHANGELOG.md).
+See [architecture](docs/architecture.md), [benchmark methodology](docs/benchmarks.md),
+[sample application](samples/EasyMapper.Sample/Program.cs), and [changelog](CHANGELOG.md).
 
 ## License
 
