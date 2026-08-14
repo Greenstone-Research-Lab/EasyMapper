@@ -11,7 +11,7 @@ No profile, startup registration, dependency-injection container, or global conf
 required. The first call builds and caches an expression-based mapping plan. Later calls execute
 the compiled delegate directly.
 
-> Project status: `0.1.0-alpha.1` is an actively developed preview and is not yet published to NuGet.
+> Current stable release: `0.1.0`. Beta builds are validated on `staging` before a stable tag is published.
 
 ## Supported targets
 
